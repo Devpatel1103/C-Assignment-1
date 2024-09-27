@@ -11,36 +11,37 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Assignment_1"
         mc:Ignorable="d"
-        Title="Messages Sent" Height="450" Width="800">
+        Title="Messages Sent" Height="600" Width="650">
     <Grid>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="200"/>
 
 
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="300"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="100"/>
         </Grid.RowDefinitions>
 
-        <Label Grid.Column="0" Grid.Row="0" Content="Messages:" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontSize="25"/>
+        <!-- Lables -->
+        <Label Grid.Column="0" Grid.Row="0" Content="Messages:" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontSize="25" Name="messageLbl"/>
+        <Label Grid.Column="2" Grid.Row="0" Height="45" Content="Day 1" Name ="dayLbl" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="25"/>
 
-        <TextBox Grid.Column="1" Grid.Row="0" Height="35" Name="messagesTextBox"  TabIndex="0" />
+        <!-- TextBox -->
+        <TextBox Grid.Column="1" Grid.Row="0" Height="45" Width="180" Name="messagesTextBox"  TabIndex="0"  />
+        <TextBox Grid.Row="1"  Grid.Column="0" Grid.ColumnSpan="3" Height="280" Width="550"  Grid.RowSpan="2" Name="displayMessagesTextBox" HorizontalAlignment="Center" VerticalAlignment="Top" IsReadOnly="True" AcceptsReturn="True" />
+        <TextBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Width="550" Height="50" VerticalAlignment="Top"  Grid.RowSpan="2" Name="dailyAverageMessagesTextBox" BorderThickness="5" IsReadOnly="True" />
 
-        <Label Grid.Column="2" Grid.Row="0" Height="35" Name="TimeLbl" VerticalAlignment="Center"/>
-
-        <TextBox Grid.Row="1"  Grid.ColumnSpan="3" Height="155" Width="auto" Margin="27,0,25,62" Grid.RowSpan="2" Name="displayMessagesTextBox" />
-
-        <TextBox Grid.Row="2" Grid.ColumnSpan="3" Height="52" VerticalAlignment="Top" Margin="27,74,25,0" Grid.RowSpan="2" Name="averageMessageTextBox" BorderThickness="5" />
-        <Button Grid.Column="0" Grid.Row="3" Content="Enter" Width="auto" FontSize="25" Margin="0,39,10,25" RenderTransformOrigin="0.605,0.555" Name="enterBtn" Click="enterBtn_Click" TabIndex="1"/>
-        <Button Grid.Column="1" Grid.Row="3" Content="Reset" Width="auto" FontSize="25" Margin="10,39,24,25" Click="resetBtn_Click" Name="resetBtn" TabIndex="2"/>
-        <Button Grid.Column="2" Grid.Row="3" Content="Exit" FontSize="25" Width="auto" Margin="10,39,10,25" Name="exitBtn" Click="exitBtn_Click" TabIndex="3"/>
+        <!-- Buttons -->
+        <Button Grid.Column="0" Grid.Row="3" Content="Enter" FontSize="25" Width="180" Height="55" Name="enterBtn" Click="enterBtn_Click" TabIndex="1"/>
+        <Button Grid.Column="1" Grid.Row="3" Content="Reset"  FontSize="25" Width="180" Height="55" Name="resetBtn" Click="resetBtn_Click"  TabIndex="2" />
+        <Button Grid.Column="2" Grid.Row="3" Content="Exit" FontSize="25"  Width="180" Height="55" Name="exitBtn" Click="exitBtn_Click" TabIndex="3" />
 
 
 
