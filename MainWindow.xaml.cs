@@ -1,7 +1,7 @@
 ﻿//Name: Patel Dev(100934719) 
 //Assignment: Assignment 1 
 //Date created: 23 september 2024
-// Date last modified:  september 2024 
+// Date last modified: 28 september 2024 
 // Description: This program will store messages of all day of week -->
 
 using System.Text;
@@ -17,19 +17,29 @@ using System.Windows.Shapes;
 
 namespace Assignment_1
 {
+    
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// This is mainWindow class
     /// </summary>
     public partial class MainWindow : Window
 
     {
-
+        // define variable to store value
         int dayCounter = 0;
-        double totalDays = 0;
+        int messageStore = 0;
 
+        /// <summary>
+        /// initialize MainWindow here
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();
+
+            //  Acess key for button
+            // this access key i took help of ChatGpt to understand the way to write acess key in c# here, because in pyhton we have direct properties for AccessKey.
+            enterBtn.Content = new AccessText { Text = "_Enter" };
+            resetBtn.Content = new AccessText { Text = "_Reset" };
+            exitBtn.Content = new AccessText { Text = "E_xit" };
         }
 
         /// <summary>
@@ -45,83 +55,101 @@ namespace Assignment_1
             messagesTextBox.Text = string.Empty;
             dayLbl.Content = "Day 1";
             displayMessagesTextBox.Text = string.Empty;
-
             dailyAverageMessagesTextBox.Text = string.Empty;
 
-
-
+            // after reset values focus to messageTextBox
             messagesTextBox.Focus();
 
         }
 
         /// <summary>
-        /// This button is insert input from user to text box as data of that day
+        /// This button is insert input from user to text box as messages of that day
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void enterBtn_Click(object sender, RoutedEventArgs e)
 
         {
+            // deine constants 
             const int minValue = 0;
             const int maxValue = 10000;
             const int maxNumberOfDays = 7;
 
 
-            //
+            // deine variable and assign valuw of message TextBox
             string userInput = messagesTextBox.Text;
 
-            //check blkanks 
-            if (isInputNotBlank(userInput)) 
+            // exception handling to save from crash
+            try
             {
+                // check condition for input
+                if (isInputNotBlank(userInput))
+                {
+                    // check condition of input is int
+                    if (isValidInteger(userInput))
+                    {
+                        int userInputInteger =  int.Parse(userInput);
 
-                if (isValidDouble(userInput)) {
-                    double userInputDouble = Convert.ToDouble(userInput);
-
-
-                    if (isValidRange(minValue, maxValue, userInputDouble)) {
-
-                        if (hasTxtBoxAnyValues(displayMessagesTextBox)) {
-                            displayMessagesTextBox.Text += Environment.NewLine + userInputDouble.ToString();
-                            
-                        }
-                        
-                        else {
-
-                            displayMessagesTextBox.Text = userInputDouble.ToString();
-                        }
-
-                        if (!isCrossMaxDays(maxNumberOfDays, dayCounter))
+                        // checkc condition for input is in range
+                        if (isValidRange(minValue, maxValue, userInputInteger))
                         {
-                            dayCounter += 1;
-                            totalDays += userInputDouble;
-                            dayLbl.Content = "Day " + (dayCounter + 1).ToString();
-                        }
-                        else { 
-                        
-                            enterBtn.IsEnabled = false;
-                            double countResult = averageGradeds(maxNumberOfDays, totalDays);
-                            dailyAverageMessagesTextBox.Text = countResult.ToString();
-                        }
+                            // if user enter valid value then display in newLine
+                            if (hasTxtBoxAnyValues(displayMessagesTextBox))
+                            {
+                                displayMessagesTextBox.Text += Environment.NewLine + userInputInteger.ToString();
+                            }
 
+                            else
+                            {
+                                displayMessagesTextBox.Text = userInputInteger.ToString();
+                            }
+
+                            // check condition if the days are in range.
+                            if (!isCrossMaxDays(maxNumberOfDays, dayCounter))
+                            {
+                                dayCounter += 1;
+                                messageStore += userInputInteger;
+                                dayLbl.Content = "Day " + (dayCounter + 1).ToString();
+                            }
+                            else
+                            {
+                                // if input values of days out of 1 week so disble textbox
+                                enterBtn.IsEnabled = false;
+                                messagesTextBox.IsEnabled = false;
+                                double countResult = averageGradeds(maxNumberOfDays, messageStore);
+                                dailyAverageMessagesTextBox.Text = countResult.ToString();
+                                resetBtn.Focus();
+                            }
+
+                        }
+                        else
+                        {
+                            MessageBox.Show("Input Should be in Range of 0 to 10000");
+                        }
                     }
                     else
                     {
-                        MessageBox.Show("INPUT IS NOT WITHING RANGE");
+                        MessageBox.Show("Input must be Integer");
+
                     }
                 }
                 else
                 {
-                    MessageBox.Show("Input must be double");
-
+                    MessageBox.Show("Input should not be null ");
                 }
+
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("input should not be null ");
+
+                MessageBox.Show("There is error ocuured please try Again");
             }
 
-            messagesTextBox.Text = string.Empty;
-            messagesTextBox.Focus();
+            finally {
+                messagesTextBox.Text = string.Empty;
+                messagesTextBox.Focus();
+            }
+            
         }
 
         
@@ -136,7 +164,7 @@ namespace Assignment_1
         }
 
         /// <summary>
-        /// This function will
+        /// This function to check the input is null or empty
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
@@ -152,21 +180,21 @@ namespace Assignment_1
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        private bool isValidDouble(string input)
+        private bool isValidInteger(string input)
         {
 
-            if (double.TryParse(input, out double result)) { return true; }
+            if (int.TryParse(input, out int result)) { return true; }
             return false;
         }
 
         /// <summary>
-        /// 
+        /// check the value is in valide range
         /// </summary>
         /// <param name="minValue"></param>
         /// <param name="maxValue"></param>
         /// <param name="input"></param>
         /// <returns></returns>
-        private bool isValidRange(int minValue, int maxValue, double input) {
+        private bool isValidRange(int minValue, int maxValue, int input) {
 
             if (input >= minValue && input <= maxValue) {
 
@@ -177,6 +205,11 @@ namespace Assignment_1
         
         }
 
+        /// <summary>
+        /// This function returns true if textbox values is not empty
+        /// </summary>
+        /// <param name="displayMessagesTextBox"> this tetxbox display perday messages</param>
+        /// <returns></returns>
         private bool hasTxtBoxAnyValues(TextBox displayMessagesTextBox)
         {
             if (!string.IsNullOrEmpty(displayMessagesTextBox.Text)) {
@@ -188,6 +221,12 @@ namespace Assignment_1
 
         }
 
+        /// <summary>
+        /// Check the Days limit
+        /// </summary>
+        /// <param name="maxNumberOfDays"></param>
+        /// <param name="dayNumber"></param>
+        /// <returns></returns>
         private bool isCrossMaxDays(int maxNumberOfDays, int dayNumber) {
 
             if (dayNumber + 1 >= maxNumberOfDays) { 
@@ -198,9 +237,19 @@ namespace Assignment_1
         }
 
 
-        private double averageGradeds(int numberOfDays, double totalDays) { 
-        
-            return totalDays / numberOfDays;
+        /// <summary>
+        /// to calcultae average messages
+        /// </summary>
+        /// <param name="numberOfDays"> value of total week days</param>
+        /// <param name="messageStore"> message store as value</param>
+        /// <returns></returns>
+        private int averageGradeds(int numberOfDays, int messageStore) {
+
+
+            int averages = messageStore / numberOfDays;
+
+            return averages;
+                
         }
     }
 
