@@ -57,6 +57,10 @@ namespace Assignment_1
             displayMessagesTextBox.Text = string.Empty;
             dailyAverageMessagesTextBox.Text = string.Empty;
 
+            // reset the day counter and messages store so it can store value again
+            dayCounter = 0;
+            messageStore = 0;
+            
             // after reset values i enabled both properties
             enterBtn.IsEnabled = true;
             messagesTextBox.IsEnabled = true;
