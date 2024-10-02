@@ -57,6 +57,10 @@ namespace Assignment_1
             displayMessagesTextBox.Text = string.Empty;
             dailyAverageMessagesTextBox.Text = string.Empty;
 
+            // after reset values i enabled both properties
+            enterBtn.IsEnabled = true;
+            messagesTextBox.IsEnabled = true;
+
             // after reset values focus to messageTextBox
             messagesTextBox.Focus();
 
